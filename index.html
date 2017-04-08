@@ -167,7 +167,7 @@
                         continue;
                     }
 
-                    timeRowHtml.replace('{' + templateKey + '}', templateSetter[templateKey]);
+                    timeRowHtml = timeRowHtml.replace('{' + templateKey + '}', templateSetter[templateKey]);
                 }
 
                 scheduleRowsHtml = scheduleRowsHtml + timeRowHtml;
