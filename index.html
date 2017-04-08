@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Yoga with Allison</title>
@@ -16,49 +16,161 @@
     <link rel="stylesheet" href="stylesheets/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-  </head>
-  <body>
-      <!--<div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/akhigginsyoga">View On GitHub</a></li>
-        </nav>
-      </div>-->
+</head>
+<body>
+    <!--<div id="header">
+      <nav>
+        <li class="fork"><a href="https://github.com/akhigginsyoga">View On GitHub</a></li>
+      </nav>
+    </div>-->
     <!-- end header -->
-
     <div class="wrapper">
+        <section>
+            <div id="title">
+                <h1>Yoga &amp; Wellness with Allison</h1>
+                <p><b>WARNING:</b> Yoga has been known to cause health and happiness</p>
+                <hr>
+                <span class="credits left">
+                    Join me on <a href="https://www.facebook.com/AKHigginsYoga/?fref=akhigginsyogagithub" target="_blank">
+                        Facebook
+                    </a>
+                </span>
+                <span class="credits right">Maintained by <a href="https://twitter.com/spykebytes" target="_blank">Colin Higgins</a></span>
+            </div>
+            <h2>
+                <a id="welcome-to-yoga-with-allison" class="anchor" href="#welcome-to-yoga-with-allison" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to Yoga with Allison
+            </h2>
 
-      <section>
-        <div id="title">
-          <h1>Yoga &amp; Wellness with Allison</h1>
-          <p><b>WARNING:</b> Yoga has been known to cause health and happiness</p>
-          <hr>
-          <span class="credits left">
-            Join me on <a href="https://www.facebook.com/AKHigginsYoga/?fref=akhigginsyogagithub" target="_blank">
-            Facebook</a>
-          </span>
-          <span class="credits right">Maintained by <a href="https://twitter.com/spykebytes" target="_blank">Colin Higgins</a></span>
-        </div>
+            <p>I studied at the Himalayan Institutue of Buffalo. I am a 200 hour Registered Yoga Teacher.</p>
 
-        <h2>
-<a id="welcome-to-yoga-with-allison" class="anchor" href="#welcome-to-yoga-with-allison" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to Yoga with Allison</h2>
+            <h2>
+                <a id="places-i-have-taught" class="anchor" href="#schedule" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Schedule of classes
+            </h2>
 
-<p>I studied at the Himalayan Institutue of Buffalo. I am a 200 hour Registered Yoga Teacher.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>Sunday</td>
+                        <td>Monday</td>
+                        <td>Tuesday</td>
+                        <td>Wednesday</td>
+                        <td>Thursday</td>
+                        <td>Friday</td>
+                        <td>Saturday</td>
+                    </tr>
+                </thead>
+                <tbody id="yoga-schedule"></tbody>
+            </table>
 
-<h2>
-<a id="places-i-have-taught" class="anchor" href="#places-i-have-taught" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Places I have taught</h2>
+            <h2>
+                <a id="places-i-have-taught" class="anchor" href="#places-i-have-taught" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Places I have taught
+            </h2>
 
-<ul>
-<li>Southtowns YMCA in West Seneca</li>
-<li>Southtowns Fitness Center in Hamburg</li>
-  <li>Shine Yoga in Hamburg <a href="https://www.facebook.com/shineyogawny/?fref=akhigginsyogagithub" target="_blank">(Facebook)</a></li>
-<li>Soulspace Salon &amp; Yoga Studio in Orchard Park</li>
-<li>Personal Studio in Lackawanna</li>
-</ul>
-      </section>
-
+            <ul>
+                <li>Southtowns YMCA in West Seneca</li>
+                <li>Southtowns Fitness Center in Hamburg</li>
+                <li>Shine Yoga in Hamburg <a href="https://www.facebook.com/shineyogawny/?fref=akhigginsyogagithub" target="_blank">(Facebook)</a></li>
+                <li>Soulspace Salon &amp; Yoga Studio in Orchard Park</li>
+                <li>Personal Studio in Lackawanna</li>
+            </ul>
+        </section>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
-  </body>
+
+
+    <script>
+
+        var scheduler = (function () {
+
+            var yogaClass = function (time, day, title) {
+                return {
+                    day: day,
+                    time: time,
+                    title: title,
+                };
+            };
+
+            var schedule = [
+                yogaClass("9:00", "saturday", "Children's Yoga at West Seneca YMCA"),
+                yogaClass("9:15", "friday", "All Levels at Hamburg Southtowns Fitness"),
+            ];
+
+            var timeOfDayGroups = {};
+
+            for (var i = 0; i < schedule.length; i++) {
+
+                if (!timeOfDayGroups.hasOwnProperty(schedule[i].time)) {
+                    timeOfDayGroups[schedule[i].time] = [];
+                }
+
+                timeOfDayGroups[schedule[i].time].push(schedule[i]);
+            }
+
+            var scheduleRowsHtml = '';
+
+            for (var timeKey in timeOfDayGroups) {
+
+                if (!timeOfDayGroups.hasOwnProperty(timeKey)) {
+                    continue;
+                }
+
+                var templateSetter = {
+                    time: timeKey,
+                    sunday: '',
+                    monday: '',
+                    tuesday: '',
+                    wednesday: '',
+                    thursday: '',
+                    friday: '',
+                    saturday: '',
+                };
+
+                for (var index = 0; index < timeOfDayGroups[timeKey].length; index++) {
+
+                    var yogaClassInstance = timeOfDayGroups[timeKey][index];
+
+                    templateSetter[yogaClassInstance.day] = yogaClassInstance.title;
+                }
+
+
+                var timeRowHtml = `
+                    <tr>
+                        <td class="time">
+                            {templateSetter.time}
+                        </td>
+                        <td class ="sunday">
+                            {templateSetter.sunday}
+                        </td>
+                        <td class ="monday">
+                            {templateSetter.monday}
+                        </td>
+                        <td class ="tuesday">
+                            {templateSetter.tuesday}
+                        </td>
+                        <td class ="wednesday">
+                            {templateSetter.wednesday}
+                        </td>
+                        <td class ="thursday">
+                            {templateSetter.thursday}
+                        </td>
+                        <td class ="friday">
+                            {templateSetter.friday}
+                        </td>
+                        <td class="saturday">
+                            {templateSetter.saturday}
+                        </td>
+                    </tr>`;
+
+
+                scheduleRowsHtml = scheduleRowsHtml + timeRowHtml;
+            }
+
+            var scheduleTableBody = document.getElementById('yoga-schedule');
+            scheduleTableBody.innerHtml = scheduleRowsHtml;
+        })();
+
+    </script>
+
+</body>
 </html>
