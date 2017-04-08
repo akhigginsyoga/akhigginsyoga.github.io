@@ -126,6 +126,34 @@
                     saturday: '',
                 };
 
+                var timeRowHtml = `
+                    <tr>
+                        <td class="time">
+                            {time}
+                        </td>
+                        <td class ="sunday">
+                            {sunday}
+                        </td>
+                        <td class ="monday">
+                            {monday}
+                        </td>
+                        <td class ="tuesday">
+                            {tuesday}
+                        </td>
+                        <td class ="wednesday">
+                            {wednesday}
+                        </td>
+                        <td class ="thursday">
+                            {thursday}
+                        </td>
+                        <td class ="friday">
+                            {friday}
+                        </td>
+                        <td class="saturday">
+                            {saturday}
+                        </td>
+                    </tr>`;
+
                 for (var index = 0; index < timeOfDayGroups[timeKey].length; index++) {
 
                     var yogaClassInstance = timeOfDayGroups[timeKey][index];
@@ -133,35 +161,14 @@
                     templateSetter[yogaClassInstance.day] = yogaClassInstance.title;
                 }
 
+                for (var templateKey in templateSetter) {
 
-                var timeRowHtml = `
-                    <tr>
-                        <td class="time">
-                            {templateSetter.time}
-                        </td>
-                        <td class ="sunday">
-                            {templateSetter.sunday}
-                        </td>
-                        <td class ="monday">
-                            {templateSetter.monday}
-                        </td>
-                        <td class ="tuesday">
-                            {templateSetter.tuesday}
-                        </td>
-                        <td class ="wednesday">
-                            {templateSetter.wednesday}
-                        </td>
-                        <td class ="thursday">
-                            {templateSetter.thursday}
-                        </td>
-                        <td class ="friday">
-                            {templateSetter.friday}
-                        </td>
-                        <td class="saturday">
-                            {templateSetter.saturday}
-                        </td>
-                    </tr>`;
+                    if (!templateSetter.hasOwnProperty(templateKey)) {
+                        continue;
+                    }
 
+                    timeRowHtml.replace('{' + templateKey + '}', templateSetter[templateKey]);
+                }
 
                 scheduleRowsHtml = scheduleRowsHtml + timeRowHtml;
             }
