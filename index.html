@@ -38,10 +38,17 @@
                 <span class="credits right">Maintained by <a href="https://twitter.com/spykebytes" target="_blank">Colin Higgins</a></span>
             </div>
             <h2>
-                <a id="welcome-to-yoga-with-allison" class="anchor" href="#welcome-to-yoga-with-allison" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to Yoga with Allison
+                <a id="welcome-to-yoga-with-allison" class="anchor" href="#welcome-to-yoga-with-allison" aria-hidden="true">
+                    <span aria-hidden="true" class="octicon octicon-link">
+                    </span>
+                </a>
+                Welcome to Yoga with Allison
             </h2>
 
-            <p>I studied at the Himalayan Institutue of Buffalo. I am a 200 hour Registered Yoga Teacher.</p>
+            <p>
+                I studied at the Himalayan Institute of Buffalo. 
+                I am a 200 hour Registered Yoga Teacher with experience teaching in many studios in the southtowns of the Buffalo area.
+            </p>
 
             <h2>
                 <a id="places-i-have-taught" class="anchor" href="#schedule" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Schedule of classes
@@ -68,6 +75,7 @@
             </h2>
 
             <ul>
+                <li>Creative Wellness in East Aurora</li>
                 <li>Southtowns YMCA in West Seneca</li>
                 <li>Southtowns Fitness Center in Hamburg</li>
                 <li>Shine Yoga in Hamburg <a href="https://www.facebook.com/shineyogawny/?fref=akhigginsyogagithub" target="_blank">(Facebook)</a></li>
@@ -83,27 +91,36 @@
 
         var scheduler = (function () {
 
-            var yogaClass = function (time, day, title) {
+            var yogaClass = function (time, day, title, isInactive) {
                 return {
                     day: day,
                     time: time,
                     title: title,
+                    inactive : false
                 };
             };
 
+            var inactive = true;
+            
             var schedule = [
-                yogaClass("9:00", "saturday", "Children's Yoga at Southtowns YMCA"),
-                yogaClass("9:15", "friday", "All Levels at Hamburg Southtowns Fitness"),
-                yogaClass("10:45", "monday", "Toddler and me Yoga at Southtowns YMCA"),
-                yogaClass("2:00", "tuesday", "Beginners/gentle/low mobility yoga at Shine Yoga WNY in Hamburg"),
-                yogaClass("2:00", "thursday", "Beginners/gentle/low mobility yoga at Shine Yoga WNY in Hamburg"),
-                yogaClass("2:00", "sunday", "All Levels at Shine Yoga WNY in Hamburg"),
+                yogaClass("10:30", "saturday", "All levels at Creative Wellness in East Aurora"),
+                yogaClass("9:00", "saturday", "Children's Yoga at Southtowns YMCA", inactive),
+                yogaClass("9:15", "friday", "All Levels at Hamburg Southtowns Fitness", inactive),
+                yogaClass("10:45", "monday", "Toddler and me Yoga at Southtowns YMCA", inactive),
+                yogaClass("2:00", "tuesday", "Beginners/gentle/low mobility yoga at Shine Yoga WNY in Hamburg", inactive),
+                yogaClass("4:30", "tuesday", "All levels at Shine Yoga WNY in Hamburg"),
+                yogaClass("2:00", "thursday", "Beginners/gentle/low mobility yoga at Shine Yoga WNY in Hamburg", inactive),
+                yogaClass("2:00", "sunday", "All Levels at Shine Yoga WNY in Hamburg", inactive),
             ];
 
             var timeOfDayGroups = {};
 
             for (var i = 0; i < schedule.length; i++) {
 
+                if (schedule[i].inactive === true) {
+                    continue;   
+                }
+                
                 if (!timeOfDayGroups.hasOwnProperty(schedule[i].time)) {
                     timeOfDayGroups[schedule[i].time] = [];
                 }
